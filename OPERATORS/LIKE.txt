@@ -1,0 +1,197 @@
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%';
+
+ENAME
+----------
+ALLEN
+ADAMS
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE JOB LIKE 'S%';
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE  '%T';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+7 rows selected.
+
+SQL> SELECT  * 
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A_';
+
+no rows selected
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%S';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME LIKE '___E%';
+
+ENAME
+----------
+ALLEN
+JONES
+JAMES
+
+SQL> SELECT ENAME ,SAL
+  2  FROM EMP
+  3  WHERE SAL LIKE '___';
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+JAMES             950
+
+SQL> SELECT ENAME , HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%82';
+
+ENAME      HIREDATE
+---------- ---------
+MILLER     23-JAN-82
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%' OR ENAME LIKE '%S';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%' AND DEPTNO IN (10,20);
+
+ENAME
+----------
+ADAMS
+
+SQL> SELECT ENAME , SAL
+  2  FROM EMP
+  3  WHERE SAL LIKE '____';
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+FORD             3000
+MILLER           1300
+
+12 rows selected.
+
+SQL> SELECT ENAME,HIREDATE
+  2  FROM EMP
+  3  WHERE HIREDATE BETWEEN '01-JAN-81' AND '31-DEC-1981'
+  4  AND SAL > 2000;
+
+ENAME      HIREDATE
+---------- ---------
+JONES      02-APR-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+KING       17-NOV-81
+FORD       03-DEC-81
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE JOB LIKE '%MAN%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+
+7 rows selected.
+
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%' AND ENAME LIKE '_D%' AND 
+  4  ENAME LIKE '%S';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE DEPTNO IN (30,40)
+  4   AND SAL > 2000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+
+SQL> SELECT EMP.*,SAL * 12 ANN_SAL
+  2  FROM EMP
+  3  WHERE JOB IN ('SALESMAN','MANAGER')
+  4  AND DEPTNO IN (20)
+  5  AND HIREDATE BETWEEN '01-JAN-82' AND '31-DEC-82';
+
+no rows selected
+
+SQL> SELECT EMP.*,SAL * 12 ANN_SAL
+  2  FROM EMP
+  3  WHERE SAL * 12 > 15000
+  4  AND DEPTNO IN (10,20)
+  5  AND HIREDATE NOT BETWEEN '01-JAN-82' AND '31-DEC-82';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO    ANN_SAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20      35700
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20      36000
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20      36000
