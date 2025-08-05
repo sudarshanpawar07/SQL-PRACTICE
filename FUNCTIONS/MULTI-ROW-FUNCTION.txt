@@ -1,0 +1,328 @@
+*) CLASS WORK 
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP;
+
+  MAX(SAL)
+----------
+      5000
+
+SQL> SELECT MIN(SAL)
+  2  FROM EMP;
+
+  MIN(SAL)
+----------
+       800
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP;
+
+  SUM(SAL)
+----------
+     29025
+
+SQL> SELECT AVG(SAL)
+  2  FROM EMP;
+
+  AVG(SAL)
+----------
+2073.21429
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP;
+
+  COUNT(*)
+----------
+        14
+
+SQL> SELECT MAX(ENAME)
+  2  FROM EMP;
+
+MAX(ENAME)
+----------
+WARD
+
+SQL> SELECT MIN(ENAME)
+  2  FROM EMP;
+
+MIN(ENAME)
+----------
+ADAMS
+
+SQL> SELECT MIN(HIREDATE)
+  2  FROM EMP;
+
+MIN(HIRED
+---------
+17-DEC-80
+
+SQL> SELECT MAX(HIREDATE)
+  2  FROM EMP;
+
+MAX(HIRED
+---------
+23-MAY-87
+
+SQL> SELECT AVG(SAL*12)
+  2  FROM EMP;
+
+AVG(SAL*12)
+-----------
+ 24878.5714
+
+SQL> SELECT MAX(ENAME),MAX(MGR)
+  2  FROM EMP;
+
+MAX(ENAME)   MAX(MGR)
+---------- ----------
+WARD             7902
+
+SQL> SELECT MAX(SAL*6),MIN(JOB),SUM(SAL*3),AVG(COMM),COUNT(*)
+  2  FROM EMP
+  3  WHERE DEPTNO IN (20,30)
+  4  AND ENAME NOT IN ('SCOTT','JAMES')
+  5  AND SAL BETWEEN 1100 AND 5000
+  6  AND HIREDATE NOT LIKE '%JAN%'
+  7  AND ENAME NOT LIKE '%R'
+  8  AND ENAME NOT LIKE '_L%'
+  9  AND (ENAME LIKE '%A%' OR ENAME LIKE '%I%' OR ENAME LIKE '%U%')
+ 10  AND ENAME NOT LIKE '%O%' AND ENAME NOT LIKE '%E%';
+
+MAX(SAL*6) MIN(JOB)  SUM(SAL*3)  AVG(COMM)   COUNT(*)
+---------- --------- ---------- ---------- ----------
+      7500 CLERK          10800        950          3
+
+
+*) ASSIGNMENT MRF 
+
+1)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP;
+
+  MAX(SAL)
+----------
+      5000
+2)
+
+SQL> SELECT MIN(SAL)
+  2  FROM EMP;
+
+  MIN(SAL)
+----------
+       800
+3)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO = 10;
+
+  MAX(SAL)
+----------
+      5000
+4)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL > 3000
+  4  AND DEPTNO = 20;
+
+  COUNT(*)
+----------
+         0
+5)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL > 3000;
+
+  COUNT(*)
+----------
+         1
+6)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER';
+
+  MAX(SAL)
+----------
+      2975
+7)
+
+SQL> SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE JOB = 'PRESIDENT';
+
+  AVG(SAL)
+----------
+      5000
+8)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%87';
+
+  COUNT(*)
+----------
+         2
+9)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB IN ('MANAGER','SALESMAN');
+
+  COUNT(*)
+----------
+         7
+
+10)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%DEC%';
+
+  COUNT(*)
+----------
+         3
+
+11)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%FEB%';
+
+  MAX(SAL)
+----------
+      1600
+12)
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%TT%';
+
+  SUM(SAL)
+----------
+      3000
+13)
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%N';
+
+  SUM(SAL)
+----------
+      2850
+14)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%';
+
+  COUNT(*)
+----------
+         2
+15)
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL > 3000
+  4  AND DEPTNO = 10
+  5  AND ENAME LIKE 'K%' AND ENAME  LIKE '%G';
+
+  COUNT(*)
+----------
+         1
+16)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE HIREDATE > '31-DEC-82';
+
+  MAX(SAL)
+----------
+      3000
+17)
+
+SQL> SELECT MIN(SAL)
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%';
+
+  MIN(SAL)
+----------
+      1100
+18)
+
+SQL> SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%T';
+
+  AVG(SAL)
+----------
+      3000
+19)
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB = 'SALESMAN';
+
+  SUM(SAL)
+----------
+      5600
+20)
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE COMM IS NOT NULL;
+
+  COUNT(*)
+----------
+         4
+
+
+21)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE COMM IS NULL;
+
+  COUNT(*)
+----------
+        10
+22)
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL > 2000
+  4  AND DEPTNO = 30;
+
+  COUNT(*)
+----------
+         1
+23)
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE HIREDATE < '01-JAN-87';
+
+  MAX(SAL)
+----------
+      5000
+24)
+
+SQL>  SELECT MAX(SAL)
+  2   FROM EMP
+  3   WHERE HIREDATE BETWEEN '01-JAN-83' AND '31-DEC-83';
+
+  MAX(SAL)
+----------
+
+
+25)
+SQL> SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO = 20 
+  4  AND ENAME LIKE 'B%' AND ENAME LIKE '%E';
+
+  AVG(SAL)
+----------
+
+
