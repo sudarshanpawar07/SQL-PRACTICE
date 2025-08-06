@@ -1,0 +1,272 @@
+SQL> SELECT MIN(SAL),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+  MIN(SAL)     DEPTNO
+---------- ----------
+       950         30
+       800         20
+      1300         10
+
+SQL> SELECT AVG(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  AVG(SAL) JOB
+---------- ---------
+    1037.5 CLERK
+      1400 SALESMAN
+      5000 PRESIDENT
+2758.33333 MANAGER
+      3000 ANALYST
+
+SQL> SET PAGES 1000 LINES 1000
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL > 2000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         3         20
+         2         10
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB != 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         2         10
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB = 'MANAGER'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         1         20
+         1         10
+
+SQL> SELECT AVG(SAL),JOB
+  2  FROM EMP
+  3  WHERE DEPTNO NOT IN (20)
+  4  GROUP BY JOB;
+
+  AVG(SAL) JOB
+---------- ---------
+      1400 SALESMAN
+      1125 CLERK
+      5000 PRESIDENT
+      2650 MANAGER
+
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+  COUNT(*) JOB
+---------- ---------
+         3 SALESMAN
+         2 CLERK
+         2 MANAGER
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB = 'CLERK'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         2         20
+         1         10
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%81'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         2         20
+         2         10
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL < 1000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         30
+         1         20
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL = 3000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         2         20
+
+SQL> SELECT MAX(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB = 'CLERK'
+  4  GROUP BY DEPTNO;
+
+  MAX(SAL)     DEPTNO
+---------- ----------
+       950         30
+      1100         20
+      1300         10
+
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%FEB%'
+  4  GROUP BY JOB;
+
+  COUNT(*) JOB
+---------- ---------
+         2 SALESMAN
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB IN ('PRESIDENT','ANALYST')
+  4  AND SAL > 2000
+  5  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         2         20
+         1         10
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB != 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         2         10
+
+SQL> SELECT SUM(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  SUM(SAL) JOB
+---------- ---------
+      4150 CLERK
+      5600 SALESMAN
+      5000 PRESIDENT
+      8275 MANAGER
+      6000 ANALYST
+
+SQL> SELECT AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE DEPTNO != 20
+  4  GROUP BY DEPTNO;
+
+  AVG(SAL)     DEPTNO
+---------- ----------
+1566.66667         30
+2916.66667         10
+
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+  COUNT(*) JOB
+---------- ---------
+         3 SALESMAN
+         2 CLERK
+         2 MANAGER
+
+SQL> SELECT COUNT(*),AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL > 2000
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)   AVG(SAL)     DEPTNO
+---------- ---------- ----------
+         1       2850         30
+         3 2991.66667         20
+         2       3725         10
+
+SQL> SELECT COUNT(*),MAX(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  COUNT(*)   MAX(SAL) JOB
+---------- ---------- ---------
+         4       1300 CLERK
+         4       1600 SALESMAN
+         1       5000 PRESIDENT
+         3       2975 MANAGER
+         2       3000 ANALYST
+
+SQL> SELECT COUNT(*),SAL
+  2  FROM EMP
+  3  GROUP BY SAL;
+
+  COUNT(*)        SAL
+---------- ----------
+         1       2450
+         1       5000
+         1       1300
+         2       1250
+         1       2850
+         1       2975
+         1       1100
+         2       3000
+         1        800
+         1       1600
+         1       1500
+         1        950
+
+12 rows selected.
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         3         10
+
+SQL> SELECT AVG(SAL),MAX(SAL),MIN(SAL),JOB
+  2  FROM EMP
+  3  WHERE HIREDATE > '31-DEC-1980'
+  4  GROUP BY JOB;
+
+  AVG(SAL)   MAX(SAL)   MIN(SAL) JOB
+---------- ---------- ---------- ---------
+      1400       1600       1250 SALESMAN
+1116.66667       1300        950 CLERK
+      5000       5000       5000 PRESIDENT
+2758.33333       2975       2450 MANAGER
+      3000       3000       3000 ANALYST
+
+SQL> SELECT COUNT(*),DEPTNO
+  2  FROM EMP
+  3  WHERE SAL > 2000
+  4  AND HIREDATE LIKE '%87'
+  5  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         1         20
+
