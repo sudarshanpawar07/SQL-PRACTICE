@@ -1,0 +1,106 @@
+1)
+SQL> SELECT SAL,DEPTNO,SAL-SAL * 21/100 "22%DEDUCTION"
+  2  FROM EMP
+  3  WHERE SAL-SAL * 21/100 > 2000;
+
+       SAL     DEPTNO 22%DEDUCTION
+---------- ---------- ------------
+      2975         20      2350.25
+      2850         30       2251.5
+      3000         20         2370
+      5000         10         3950
+     
+
+2)
+SQL> SELECT EMP.*, SAL * 6 HALF_TERM_SAL
+  2  FROM EMP
+  3  WHERE SAL >= 1250
+  4  AND DEPTNO IN (10,30)
+  5  AND HIREDATE > '03-DEC-81';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO HALF_TERM_SAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- -------------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10          7800
+
+
+3)
+SQL> SELECT ENAME
+  2   FROM EMP
+  3   WHERE HIREDATE > '31-DEC-75' AND HIREDATE < '01-JAN-85'
+  4   AND HIREDATE NOT BETWEEN '01-JAN-82' AND '31-DEC-82'
+  5    AND JOB IN ('CLERK','ANALYST','PRESIDENT')
+  6    AND DEPTNO NOT IN (20);
+
+ENAME
+----------
+KING
+JAMES
+
+4)
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%' 
+  4  AND ENAME NOT LIKE '%S%'
+  5  AND SAL <= 3000
+  6  AND MGR NOT IN ( 7566,7839);
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+
+5)
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE  HIREDATE  BETWEEN '01-JAN-81' AND '31-DEC-81'
+  4  AND HIREDATE NOT BETWEEN '01-FEB-81' AND '31-MAY-81'
+  5  AND SAL LIKE '____'
+  6  AND JOB LIKE '%AN%'
+  7  AND COMM IS NOT NULL;
+
+ENAME
+----------
+MARTIN
+TURNER
+
+7)
+ SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'C%' OR ENAME LIKE 'S%'
+  4  AND SAL >= 1000
+  5  AND COMM IS NULL;
+
+ENAME
+----------
+CLARK
+SCOTT
+
+9)
+SQL> SELECT ENAME,JOB,COMM
+  2  FROM EMP
+  3  WHERE COMM IS NOT NULL
+  4  AND JOB LIKE '%LES%'
+  5  AND COMM LIKE '___' OR COMM LIKE '_';
+
+ENAME      JOB             COMM
+---------- --------- ----------
+ALLEN      SALESMAN         300
+WARD       SALESMAN         500
+TURNER     SALESMAN           0
+
+10)
+SQL>  SELECT 'DEAR ! ' || ENAME || ' YOU ARE WORKING AS ' || JOB || ' AND HIRED ON ' || HIREDATE 
+  2   ||' WITH THE SALARY IN HAND ' || SAL
+  3   FROM EMP
+  4   WHERE SAL * 6 < 10000
+  5  AND ENAME LIKE '%R___';
+
+'DEAR!'||ENAME||'YOUAREWORKINGAS'||JOB||'ANDHIREDON'||HIREDATE||'WITHTHESALARYINHAND'||SAL
+----------------------------------------------------------------------------------------------------
+DEAR ! MARTIN YOU ARE WORKING AS SALESMAN AND HIRED ON 28-SEP-81 WITH THE SALARY IN HAND 1250
+DEAR ! TURNER YOU ARE WORKING AS SALESMAN AND HIRED ON 08-SEP-81 WITH THE SALARY IN HAND 1500
+
+
+

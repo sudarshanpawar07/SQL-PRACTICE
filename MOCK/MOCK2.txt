@@ -1,0 +1,158 @@
+1)
+SQL> SELECT DISTINCT ENAME,SAL,SAL * 12 ANN_SAL
+  2  FROM EMP
+  3  WHERE SAL BETWEEN 2000 AND 3000
+  4  AND SAL * 12 > 29400;
+
+ENAME             SAL    ANN_SAL
+---------- ---------- ----------
+BLAKE            2850      34200
+FORD             3000      36000
+JONES            2975      35700
+SCOTT            3000      36000
+
+2)
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE  DEPTNO IN (10,40,20,30)
+  4  AND JOB NOT IN ('SALESMAN','MANAGER')
+  5  AND HIREDATE > '31-DEC-82';
+
+ENAME
+----------
+SCOTT
+ADAMS
+
+3)
+ 1  SELECT EMP.*,SAL * 6 HALF_TERM_SAL
+ 2  FROM EMP
+ 3  WHERE (HIREDATE LIKE '%DEC%' OR  HIREDATE LIKE '%FEB%')
+ 4  AND EMPNO BETWEEN 7369 AND 7521
+
+
+    EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO HALF_TERM_SAL
+--------- ---------- --------- ---------- --------- ---------- ---------- ---------- -------------
+     7369 SMITH      CLERK           7902 17-DEC-80        800                    20          4800
+     7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30          9600
+     7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30          7500
+
+
+4)
+
+SQL>  SELECT COUNT(*),DEPTNO
+  2   FROM EMP
+  3   WHERE HIREDATE LIKE '%81' AND ENAME LIKE '%E%'
+  4  GROUP BY DEPTNO;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         4         30
+         1         20
+
+5)
+SQL> SELECT COUNT(*),MAX(SAL),MIN(SAL),SUM(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE COMM IS NULL AND MGR IS NOT NULL
+  4   GROUP BY DEPTNO
+  5  HAVING COUNT(*) >= 2  AND MAX(SAL) > 2450 AND (MIN(SAL) = 800 OR MIN(SAL) = 950)
+  6  AND (SUM(SAL) LIKE '____' OR SUM(SAL) LIKE '_____');
+
+  COUNT(*)   MAX(SAL)   MIN(SAL)   SUM(SAL)     DEPTNO
+---------- ---------- ---------- ---------- ----------
+         2       2850        950       3800         30
+         5       3000        800      10875         20
+
+6)
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE (JOB LIKE '%L%' OR JOB LIKE '%N%')
+  4  GROUP BY JOB
+  5  HAVING COUNT(*) >= 2
+  6  AND  MAX(SAL) BETWEEN 1000 AND 9999
+  7  AND MIN(SAL) NOT BETWEEN 100 AND 1000
+  8  ORDER BY JOB
+  9  ;
+
+  COUNT(*) JOB
+---------- ---------
+         2 ANALYST
+         3 MANAGER
+         4 SALESMAN
+
+
+6)
+SELECT COUNT(*),JOB
+FROM EMP
+WHERE (JOB LIKE '%L%' OR JOB LIKE '%N%')
+GROUP BY JOB
+HAVING COUNT(*) >= 2
+AND  MAX(SAL) LIKE '____'
+AND MIN(SAL) NOT LIKE '___'
+ORDER BY JOB
+
+ COUNT(*) JOB
+--------- ---------
+        3 MANAGER
+        3 SALESMAN
+7)
+
+ 1  SELECT 'MR. ' || ENAME || ' YOU HIRED ON ' || HIREDATE || ' AND WORKING AS  A '
+ 2   ||  JOB || ' WITH 23% HIKE OF SALARY ' || (SAL + SAL * 23/100)
+ 3  FROM EMP
+ 4  WHERE HIREDATE < '01-JAN-82'
+ 5  AND HIREDATE NOT LIKE '%-SEP-81' AND JOB IN ('ANALYST' , 'PRESIDENT')
+
+
+MR.'||ENAME||'YOUHIREDON'||HIREDATE||'ANDWORKINGASA'||JOB||'WITH23%HIKEOFSALARY'||(SAL+SAL*23/100)
+---------------------------------------------------------------------------------------------------
+MR. KING YOU HIRED ON 17-NOV-81 AND WORKING AS  A PRESIDENT WITH 23% HIKE OF SALARY 6150
+MR. FORD YOU HIRED ON 03-DEC-81 AND WORKING AS  A ANALYST WITH 23% HIKE OF SALARY 3690
+
+8)
+
+  1  SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE ( ENAME LIKE '%A%' OR
+  4     ENAME LIKE '%E%' OR
+  5     ENAME LIKE '%I%' OR
+  6     ENAME LIKE '%O%' OR
+  7     ENAME LIKE '%U%' )
+  8  AND DEPTNO NOT IN (20)
+  9  AND SAL BETWEEN 2450 AND 3000
+ 10 ORDER BY ENAME DESC
+ 
+ ENAME             SAL
+ ---------- ----------
+ CLARK            2450
+ BLAKE            2850
+
+9)
+
+  1  SELECT MAX(SAL),MIN(SAL),SUM(SAL),COUNT(*)
+  2  FROM EMP
+  3  WHERE SAL IS NOT NULL AND ENAME NOT LIKE '%S%'
+  4 AND DEPTNO IN (10,30)
+
+
+  MAX(SAL)   MIN(SAL)   SUM(SAL)   COUNT(*)
+---------- ---------- ---------- ----------
+      5000       1250      17200          8
+
+10)
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL > 1000 AND SAL < 5000
+  4  AND MGR BETWEEN 7000 AND 8000
+     AND JOB NOT IN ('CLERK', 'MANAGER')
+  5  AND ENAME LIKE '%R___'
+  6  AND COMM IS NOT NULL
+  7 ORDER BY SAL DESC
+
+ENAME
+----------
+TURNER
+MARTIN
+
+
+
