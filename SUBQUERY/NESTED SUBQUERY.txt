@@ -1,0 +1,250 @@
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL  IN (SELECT MAX(SAL)
+  4             FROM EMP
+  5             WHERE SAL < (SELECT MAX(SAL)
+  6*                         FROM EMP))
+SQL> /
+
+ENAME
+----------
+SCOTT
+FORD
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL  > (SELECT SAL
+  4             FROM EMP
+  5             WHERE ENAME = 'WARD')
+  6  AND  DEPTNO IN (SELECT DEPTNO
+  7             FROM EMP
+  8             WHERE ENAME = 'BLAKE')
+  9  AND HIREDATE < (SELECT HIREDATE
+ 10             FROM EMP
+ 11*            WHERE ENAME = 'TURNER')
+SQL> /
+
+ENAME
+----------
+BLAKE
+ALLEN
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  HIREDATE > (SELECT HIREDATE
+  4             FROM EMP
+  5             WHERE ENAME = 'SMITH')
+  6  AND HIREDATE < (SELECT HIREDATE
+  7             FROM EMP
+  8             WHERE ENAME = 'MILLER')
+  9  AND  JOB IN (SELECT JOB
+ 10             FROM EMP
+ 11             WHERE ENAME = 'JONES')
+ 12  AND DEPTNO IN (SELECT DEPTNO
+ 13             FROM DEPT
+ 14*            WHERE DNAME = 'SALES')
+SQL> /
+
+ENAME
+----------
+BLAKE
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL < (SELECT SAL
+  4             FROM EMP
+  5             WHERE ENAME = 'KING')
+  6  AND HIREDATE < (SELECT HIREDATE
+  7             FROM EMP
+  8             WHERE ENAME = 'MILLER')
+  9  AND DEPTNO IN (SELECT DEPTNO
+ 10             FROM DEPT
+ 11*            WHERE LOC = 'NEW YORK')
+SQL> /
+
+ENAME
+----------
+CLARK
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL IN (SELECT MIN(SAL)
+  4             FROM EMP
+  5             WHERE SAL > (SELECT MIN(SAL)
+  6                          FROM EMP
+  7                          WHERE SAL > (SELECT MIN(SAL)
+  8*                                      FROM EMP)))
+SQL> /
+
+ENAME
+----------
+ADAMS
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE  SAL IN (SELECT MAX(SAL)
+  6                             FROM EMP
+  7                             WHERE SAL < (SELECT MAX(SAL)
+  8                                          FROM EMP
+  9                                          WHERE SAL < (SELECT MAX(SAL)
+ 10*                                                      FROM EMP))))
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  HIREDATE IN (SELECT MAX(HIREDATE)
+  4*               FROM EMP)
+SQL> /
+
+ENAME
+----------
+ADAMS
+
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE  DEPTNO IN (SELECT DEPTNO
+  4                FROM EMP
+  5                WHERE SAL IN (SELECT MAX(SAL)
+  6                              FROM EMP
+  7                              WHERE  SAL < (SELECT MAX(SAL)
+  8*                                    FROM EMP)))
+  9  /
+
+LOC
+-------------
+DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE  DEPTNO IN (SELECT DEPTNO
+  4                FROM EMP
+  5                WHERE SAL IN (SELECT MIN(SAL)
+  6                              FROM EMP
+  7                              WHERE  SAL > (SELECT MIN(SAL)
+  8*                                    FROM EMP)))
+SQL> /
+
+LOC
+-------------
+CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE  SAL IN (SELECT MIN(SAL)
+  4                FROM EMP
+  5                WHERE SAL > (SELECT MIN(SAL)
+  6                              FROM EMP
+  7                              WHERE  SAL > (SELECT MIN(SAL)
+  8                                            FROM EMP
+  9                                            WHERE SAL > (SELECT MIN(SAL)
+ 10*                                                        FROM EMP))))
+SQL> /
+
+ENAME
+----------
+WARD
+MARTIN
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE  DEPTNO IN (SELECT DEPTNO
+  4                FROM EMP
+  5*               WHERE ENAME = 'SMITH')
+SQL> /
+
+DNAME
+--------------
+RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE  DEPTNO IN (SELECT DEPTNO
+  4                FROM EMP
+  5*               WHERE ENAME = 'KING')
+SQL> /
+
+DNAME          LOC
+-------------- -------------
+ACCOUNTING     NEW YORK
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE  DEPTNO IN (SELECT DEPTNO
+  4                FROM EMP
+  5*               WHERE EMPNO = 7902)
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE JOB IN ('PRESIDENT')
+  4  AND  SAL > (SELECT SAL
+  5                FROM EMP
+  6                WHERE ENAME  = 'SCOTT')
+  7  AND HIREDATE > (SELECT HIREDATE
+  8             FROM EMP
+  9*            WHERE ENAME = 'SMITH')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+
+
+
