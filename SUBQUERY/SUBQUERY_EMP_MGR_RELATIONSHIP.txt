@@ -1,0 +1,295 @@
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                 FROM EMP
+  5*           WHERE ENAME = 'SMITH')
+SQL> /
+
+ENAME
+----------
+FORD
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                 FROM EMP
+  5*           WHERE ENAME = 'MILLER')
+SQL> /
+
+       SAL
+----------
+      2450
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                 FROM EMP
+  5*           WHERE ENAME = 'ALLEN')
+SQL> /
+
+ENAME
+----------
+BLAKE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                 FROM EMP
+  5*           WHERE ENAME = 'ADAMS')
+SQL> /
+
+       SAL
+----------
+      3000
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4             FROM EMP
+  5             WHERE EMPNO IN (SELECT MGR
+  6                                     FROM EMP
+  7*                            WHERE ENAME = 'ADAMS'))
+SQL> /
+
+ENAME
+----------
+JONES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                              FROM EMP
+  7                              WHERE EMPNO IN (SELECT MGR
+  8                                                      FRO/M EMP
+  9*                                             WHERE ENAME = 'SMITH')))
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO
+  4             FROM EMP
+  5*            WHERE ENAME = 'KING'
+SQL> /
+
+  COUNT(*)
+----------
+         3
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO
+  4                FROM EMP
+  5*               WHERE ENAME = 'BLAKE')
+SQL> /
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+JAMES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO
+  4                FROM EMP
+  5*               WHERE ENAME = 'JONES')
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                   WHERE ENAME = 'MARTIN'))
+SQL> /
+
+LOC
+-------------
+CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                     FROM EMP
+  5*                    WHERE ENAME = 'FORD')
+SQL> /
+
+  COUNT(*)
+----------
+         1
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COMM
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO
+  4           FROM EMP
+  5           WHERE MGR IN (SELECT EMPNO
+  6                                 FROM EMP
+  7*                                WHERE ENAME = 'BLAKE'))
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE MGR IN (SELECT EMPNO
+  6                                    FROM EMP
+  7*                                   WHERE ENAME = 'CLARK'))
+SQL> /
+
+DNAME
+--------------
+ACCOUNTING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                   WHERE ENAME = 'SCOTT'))
+SQL> /
+
+LOC
+-------------
+DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DEPTNO
+  2  FROM EMP
+  3  WHERE EMPNO IN (SELECT MGR
+  4                  FROM EMP
+  5*                    WHERE ENAME = 'MILLER')
+SQL> /
+
+    DEPTNO
+----------
+        10
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                      WHERE ENAME = 'WARD'))
+SQL> /
+
+  SUM(SAL)
+----------
+      9400
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MIN(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                      WHERE ENAME = 'TURNER'))
+SQL> /
+
+  MIN(SAL)
+----------
+       950
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                      WHERE ENAME = 'JONES'))
+SQL> /
+
+  AVG(SAL)
+----------
+2916.66667
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4              FROM EMP
+  5              WHERE EMPNO IN (SELECT MGR
+  6                                    FROM EMP
+  7*                                      WHERE ENAME = 'JAMES'))
+SQL> /
+
+  COUNT(*)
+----------
+         6
+
+
+
+
+
+
