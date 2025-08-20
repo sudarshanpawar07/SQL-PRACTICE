@@ -1,0 +1,578 @@
+SQL> SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO;
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3* ON E.DEPTNO = D.DEPTNO
+SQL> /
+
+ENAME             SAL LOC
+---------- ---------- -------------
+SMITH             800 DALLAS
+ALLEN            1600 CHICAGO
+WARD             1250 CHICAGO
+JONES            2975 DALLAS
+MARTIN           1250 CHICAGO
+BLAKE            2850 CHICAGO
+CLARK            2450 NEW YORK
+SCOTT            3000 DALLAS
+KING             5000 NEW YORK
+TURNER           1500 CHICAGO
+ADAMS            1100 DALLAS
+JAMES             950 CHICAGO
+FORD             3000 DALLAS
+MILLER           1300 NEW YORK
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,E.DEPTNO,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3* ON E.DEPTNO = D.DEPTNO
+SQL> /
+
+ENAME          DEPTNO DNAME
+---------- ---------- --------------
+SMITH              20 RESEARCH
+ALLEN              30 SALES
+WARD               30 SALES
+JONES              20 RESEARCH
+MARTIN             30 SALES
+BLAKE              30 SALES
+CLARK              10 ACCOUNTING
+SCOTT              20 RESEARCH
+KING               10 ACCOUNTING
+TURNER             30 SALES
+ADAMS              20 RESEARCH
+JAMES              30 SALES
+FORD               20 RESEARCH
+MILLER             10 ACCOUNTING
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,E.DEPTNO,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE E.DEPTNO IN (20)
+SQL> /
+
+ENAME          DEPTNO DNAME
+---------- ---------- --------------
+SMITH              20 RESEARCH
+JONES              20 RESEARCH
+SCOTT              20 RESEARCH
+ADAMS              20 RESEARCH
+FORD               20 RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE E.SAL <  2000
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+MILLER     ACCOUNTING
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE D.LOC  = 'DALLAS'
+SQL> /
+
+ENAME      LOC
+---------- -------------
+SMITH      DALLAS
+JONES      DALLAS
+SCOTT      DALLAS
+ADAMS      DALLAS
+FORD       DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE ENAME LIKE 'A%' AND DNAME LIKE '%S'
+SQL> /
+
+ENAME             SAL DNAME
+---------- ---------- --------------
+ALLEN            1600 SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE SAL > (SELECT SAL
+  5             FROM EMP
+  6*            WHERE ENAME = 'SCOTT') AND DNAME = 'ACCOUNTING'
+SQL> /
+
+ENAME             SAL DNAME
+---------- ---------- --------------
+KING             5000 ACCOUNTING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE JOB  IN (SELECT JOB
+  5                 FROM EMP
+  6*               WHERE ENAME = 'BLAKE') AND LOC = 'DALLAS'
+SQL> /
+
+  MAX(SAL)
+----------
+      2975
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,HIREDATE,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE HIREDATE LIKE '%FEB%' AND DNAME LIKE '%A%'
+SQL> /
+
+ENAME      HIREDATE  DNAME
+---------- --------- --------------
+ALLEN      20-FEB-81 SALES
+WARD       22-FEB-81 SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE SAL > (SELECT SAL
+  5             FROM EMP
+  6             WHERE ENAME = 'MILLER')
+  7* AND LOC = 'NEW YORK'
+SQL> /
+
+ENAME
+----------
+CLARK
+KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE ENAME LIKE '____' AND
+  5* DNAME LIKE '%CC%'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+KING       ACCOUNTING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,ENAME,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE HIREDATE < '01-JAN-81' AND
+  5* LOC = 'DALLAS'
+SQL> /
+
+DNAME          ENAME      LOC
+-------------- ---------- -------------
+RESEARCH       SMITH      DALLAS
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE JOB IN (SELECT JOB
+  5             FROM EMP
+  6             WHERE ENAME = 'JONES')
+  7*  AND LOC = 'CHICAGO'
+SQL> /
+
+ENAME      JOB       LOC
+---------- --------- -------------
+BLAKE      MANAGER   CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE SAL IN (SELECT SAL
+  5             FROM EMP
+  6             WHERE ENAME = 'SCOTT')
+  7   AND LOC = 'DALLAS'
+  8* AND HIREDATE LIKE '%DEC%'
+SQL> /
+
+ENAME      LOC
+---------- -------------
+FORD       DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE JOB LIKE '%MAN' AND ENAME LIKE '%LL%'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,E.DEPTNO,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE JOB IN ( SELECT JOB
+  5             FROM EMP
+  6             WHERE ENAME = 'SMITH')
+  7* AND LOC = 'NEW YORK'
+SQL> /
+
+ENAME          DEPTNO DNAME
+---------- ---------- --------------
+MILLER             10 ACCOUNTING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE HIREDATE > '31-DEC-80'
+  5* AND DNAME = 'RESEARCH' AND JOB = 'ANALYST'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+SCOTT      RESEARCH
+FORD       RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE SAL LIKE '%50' AND LOC = 'CHICAGO'
+  5* AND ENAME LIKE 'M%N'
+SQL> /
+
+ENAME             SAL LOC
+---------- ---------- -------------
+MARTIN           1250 CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE SAL < (SELECT SAL
+  5             FROM EMP
+  6             WHERE ENAME = 'JAMES')
+  7* AND HIREDATE LIKE '%80' AND LOC = 'DALLAS'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,E.DEPTNO,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE JOB IN ('SALESMAN','MANAGER') AND
+  5  E.DEPTNO IN (20,30)
+  6  AND  SAL >(SELECT SAL
+  7             FROM EMP
+  8             WHERE ENAME = 'WARD')
+  9  AND DNAME IN ('SALES','RESEARCH')
+ 10* AND COMM IS NOT NULL
+ 11  /
+
+ENAME          DEPTNO DNAME
+---------- ---------- --------------
+ALLEN              30 SALES
+TURNER             30 SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,LOC
+  2  FROM EMP E INNER JOIN DEPT D
+  3* ON E.DEPTNO = D.DEPTNO
+SQL> /
+
+ENAME      LOC
+---------- -------------
+SMITH      DALLAS
+ALLEN      CHICAGO
+WARD       CHICAGO
+JONES      DALLAS
+MARTIN     CHICAGO
+BLAKE      CHICAGO
+CLARK      NEW YORK
+SCOTT      DALLAS
+KING       NEW YORK
+TURNER     CHICAGO
+ADAMS      DALLAS
+JAMES      CHICAGO
+FORD       DALLAS
+MILLER     NEW YORK
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,SAL
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE DNAME = 'ACCOUNTING'
+SQL> /
+
+DNAME                 SAL
+-------------- ----------
+ACCOUNTING           2450
+ACCOUNTING           5000
+ACCOUNTING           1300
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,SAL * 12 ANN_SAL
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE SAL > 2340
+SQL> /
+
+DNAME             ANN_SAL
+-------------- ----------
+RESEARCH            35700
+SALES               34200
+ACCOUNTING          29400
+RESEARCH            36000
+ACCOUNTING          60000
+RESEARCH            36000
+
+6 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE DNAME LIKE '%A%'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+SMITH      RESEARCH
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE JOB  = 'SALESMAN'
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+TURNER     SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,JOB
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE JOB  LIKE 'S%' AND DNAME LIKE 'S%'
+SQL> /
+
+ENAME      DNAME          JOB
+---------- -------------- ---------
+ALLEN      SALES          SALESMAN
+WARD       SALES          SALESMAN
+MARTIN     SALES          SALESMAN
+TURNER     SALES          SALESMAN
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,MGR
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4* WHERE MGR = 7839
+SQL> /
+
+ENAME      DNAME                 MGR
+---------- -------------- ----------
+JONES      RESEARCH             7839
+BLAKE      SALES                7839
+CLARK      ACCOUNTING           7839
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,HIREDATE
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE HIREDATE > '31-DEC-83'
+  5* AND DNAME IN ('ACCOUNTING','RESEARCH')
+SQL> /
+
+ENAME      DNAME          HIREDATE
+---------- -------------- ---------
+SCOTT      RESEARCH       19-APR-87
+ADAMS      RESEARCH       23-MAY-87
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME,COMM,E.DEPTNO
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE COMM IS NOT NULL
+  5* AND E.DEPTNO IN (10,30)
+SQL> /
+
+ENAME      DNAME                COMM     DEPTNO
+---------- -------------- ---------- ----------
+ALLEN      SALES                 300         30
+WARD       SALES                 500         30
+MARTIN     SALES                1400         30
+TURNER     SALES                   0         30
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,EMPNO
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE EMPNO IN (7839,7902)
+  5* AND LOC = 'NEW YORK'
+SQL> /
+
+DNAME               EMPNO
+-------------- ----------
+ACCOUNTING           7839
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,DNAME
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO = D.DEPTNO
+  4  WHERE  SAL > (SELECT SAL
+  5             FROM EMP        
+  6*            WHERE ENAME = 'SMITH')
+SQL> /
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+JONES      RESEARCH
+MARTIN     SALES
+BLAKE      SALES
+CLARK      ACCOUNTING
+SCOTT      RESEARCH
+KING       ACCOUNTING
+TURNER     SALES
+ADAMS      RESEARCH
+JAMES      SALES
+FORD       RESEARCH
+MILLER     ACCOUNTING
+
+13 rows selected.
+
+
+
+
+
