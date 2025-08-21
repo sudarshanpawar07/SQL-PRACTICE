@@ -1,0 +1,475 @@
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.SAL EMP_SAL,E2.SAL MGR_SAL
+  2  FROM EMP E1 JOIN EMP E2
+  3* ON E1.MGR = E2.EMPNO
+SQL> /
+
+   EMP_SAL    MGR_SAL
+---------- ----------
+       800       3000
+      1600       2850
+      1250       2850
+      2975       5000
+      1250       2850
+      2850       5000
+      2450       5000
+      3000       2975
+      1500       2850
+      1100       3000
+       950       2850
+      3000       2975
+      1300       2450
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.ENAME MGR_ENAME
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E1.DEPTNO = 20
+SQL> /
+
+EMP_ENAME  MGR_ENAME
+---------- ----------
+SMITH      FORD
+JONES      KING
+SCOTT      JONES
+ADAMS      SCOTT
+FORD       JONES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.ENAME MGR_ENAME
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E2.JOB IN ('PRESIDENT')
+SQL> /
+
+EMP_ENAME  MGR_ENAME
+---------- ----------
+JONES      KING
+BLAKE      KING
+CLARK      KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E1.SAL EMP_SAL,E2.ENAME MGR_ENAME,E2.SAL MGR_SAL
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E1.SAL > 1000
+SQL> /
+
+EMP_ENAME     EMP_SAL MGR_ENAME     MGR_SAL
+---------- ---------- ---------- ----------
+ALLEN            1600 BLAKE            2850
+WARD             1250 BLAKE            2850
+JONES            2975 KING             5000
+MARTIN           1250 BLAKE            2850
+BLAKE            2850 KING             5000
+CLARK            2450 KING             5000
+SCOTT            3000 JONES            2975
+TURNER           1500 BLAKE            2850
+ADAMS            1100 SCOTT            3000
+FORD             3000 JONES            2975
+MILLER           1300 CLARK            2450
+
+11 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E1.HIREDATE EMP_HIREDATE,E2.ENAME MGR_ENAME,E2.SAL MGR_HIREDATE
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4  WHERE E1.HIREDATE > '31-DEC-1980' AND
+  5* E2.HIREDATE < '01-JAN-1987'
+SQL> /
+
+EMP_ENAME  EMP_HIRED MGR_ENAME  MGR_HIREDATE
+---------- --------- ---------- ------------
+ALLEN      20-FEB-81 BLAKE              2850
+WARD       22-FEB-81 BLAKE              2850
+JONES      02-APR-81 KING               5000
+MARTIN     28-SEP-81 BLAKE              2850
+BLAKE      01-MAY-81 KING               5000
+CLARK      09-JUN-81 KING               5000
+SCOTT      19-APR-87 JONES              2975
+TURNER     08-SEP-81 BLAKE              2850
+JAMES      03-DEC-81 BLAKE              2850
+FORD       03-DEC-81 JONES              2975
+MILLER     23-JAN-82 CLARK              2450
+
+11 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.ENAME MGR_ENAME
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E1.JOB = 'CLERK'
+SQL> /
+
+EMP_ENAME  MGR_ENAME
+---------- ----------
+SMITH      FORD
+ADAMS      SCOTT
+JAMES      BLAKE
+MILLER     CLARK
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.JOB MGR_DESI
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E2.DEPTNO IN (10,20)
+SQL> /
+
+EMP_ENAME  MGR_DESI
+---------- ---------
+SMITH      ANALYST
+JONES      PRESIDENT
+BLAKE      PRESIDENT
+CLARK      PRESIDENT
+SCOTT      MANAGER
+ADAMS      ANALYST
+FORD       MANAGER
+MILLER     MANAGER
+
+8 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.ENAME MGR_ENAME
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E1.HIREDATE < '01-JAN-1982'
+SQL> /
+
+EMP_ENAME  MGR_ENAME
+---------- ----------
+SMITH      FORD
+ALLEN      BLAKE
+WARD       BLAKE
+JONES      KING
+MARTIN     BLAKE
+BLAKE      KING
+CLARK      KING
+TURNER     BLAKE
+JAMES      BLAKE
+FORD       JONES
+
+10 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME EMP_ENAME,E2.ENAME MGR_ENAME
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4* WHERE E1.SAL > 2300 AND E2.SAL > 2300
+SQL> /
+
+EMP_ENAME  MGR_ENAME
+---------- ----------
+JONES      KING
+BLAKE      KING
+CLARK      KING
+SCOTT      JONES
+FORD       JONES
+
+SQL> SELECT E1.ENAME EMP_NAME,E1.SAL EMP_SAL,E2.ENAME MGR_NAME,E2.SAL MGR_SAL
+  2  FROM EMP E1 JOIN EMP E2
+  3  ON E1.MGR = E2.EMPNO
+  4  WHERE E1.SAL > E2.SAL;
+
+EMP_NAME      EMP_SAL MGR_NAME      MGR_SAL
+---------- ---------- ---------- ----------
+SCOTT            3000 JONES            2975
+FORD             3000 JONES            2975
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E1.HIREDATE EMP_HIREDATE,E2.ENAME MGR_NAME,E2.HIREDATE MGR_HIREDATE
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.HIREDATE < E2.HIREDATE
+SQL> /
+
+EMP_NAME   EMP_HIRED MGR_NAME   MGR_HIRED
+---------- --------- ---------- ---------
+SMITH      17-DEC-80 FORD       03-DEC-81
+ALLEN      20-FEB-81 BLAKE      01-MAY-81
+WARD       22-FEB-81 BLAKE      01-MAY-81
+JONES      02-APR-81 KING       17-NOV-81
+BLAKE      01-MAY-81 KING       17-NOV-81
+CLARK      09-JUN-81 KING       17-NOV-81
+
+6 rows selected.
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.HIREDATE LIKE '%80' AND E2.HIREDATE LIKE '%81'
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+SMITH      FORD
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.HIREDATE LIKE '%87' AND E2.HIREDATE LIKE '%87'
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+ADAMS      SCOTT
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.HIREDATE LIKE '%DEC%' AND E2.HIREDATE LIKE '%DEC%'
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+SMITH      FORD
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.SAL > 2900 AND E2.SAL > 3000
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+JONES      KING
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.JOB = 'ANALYST'AND E2.JOB = 'MANAGER'
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+SCOTT      JONES
+FORD       JONES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E1.ENAME EMP_NAME,E2.ENAME MGR_NAME
+  2      FROM EMP E1 JOIN EMP E2
+  3      ON E1.MGR = E2.EMPNO
+  4*    WHERE E1.SAL < 1000 AND E2.DEPTNO = 30
+SQL> /
+
+EMP_NAME   MGR_NAME
+---------- ----------
+JAMES      BLAKE
+
+SQL> SELECT E1.ENAME   EMP_NAME,
+  2         D1.LOC     EMP_LOC,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.LOC     MGR_LOC
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  /
+
+EMP_NAME   EMP_LOC       MGR_NAME   MGR_LOC
+---------- ------------- ---------- -------------
+SMITH      DALLAS        FORD       DALLAS
+ALLEN      CHICAGO       BLAKE      CHICAGO
+WARD       CHICAGO       BLAKE      CHICAGO
+JONES      DALLAS        KING       NEW YORK
+MARTIN     CHICAGO       BLAKE      CHICAGO
+BLAKE      CHICAGO       KING       NEW YORK
+CLARK      NEW YORK      KING       NEW YORK
+SCOTT      DALLAS        JONES      DALLAS
+TURNER     CHICAGO       BLAKE      CHICAGO
+ADAMS      DALLAS        SCOTT      DALLAS
+JAMES      CHICAGO       BLAKE      CHICAGO
+FORD       DALLAS        JONES      DALLAS
+MILLER     NEW YORK      CLARK      NEW YORK
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME   EMP_NAME,
+  2         D1.LOC     EMP_LOC,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.LOC     MGR_LOC
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12* WHERE E1.JOB = 'CLERK' AND D2.LOC = 'DALLAS'
+SQL> /
+
+EMP_NAME   EMP_LOC       MGR_NAME   MGR_LOC
+---------- ------------- ---------- -------------
+SMITH      DALLAS        FORD       DALLAS
+ADAMS      DALLAS        SCOTT      DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME  EMP_NAME,
+  2         D1.LOC     EMP_LOC,
+  3         E2.ENAME  MGR_NAME,
+  4         D2.LOC     MGR_LOC
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  WHERE E1.JOB = 'SALESMAN' AND D1.DNAME = 'SALES'
+ 13* AND E2.JOB  = 'MANAGER' AND D2.LOC = 'CHICAGO'
+SQL> /
+
+EMP_NAME   EMP_LOC       MGR_NAME   MGR_LOC
+---------- ------------- ---------- -------------
+ALLEN      CHICAGO       BLAKE      CHICAGO
+WARD       CHICAGO       BLAKE      CHICAGO
+MARTIN     CHICAGO       BLAKE      CHICAGO
+TURNER     CHICAGO       BLAKE      CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME   EMP_NAME,
+  2         D1.DNAME     EMP_DNAME,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.DNAME     MGR_DNAME
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  WHERE E1.HIREDATE LIKE '%81' AND E1.JOB = 'CLERK' AND
+ 13*  D2.DNAME = 'SALES'
+SQL> /
+
+EMP_NAME   EMP_DNAME      MGR_NAME   MGR_DNAME
+---------- -------------- ---------- --------------
+JAMES      SALES          BLAKE      SALES
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME   EMP_NAME,
+  2         D1.LOC     EMP_LOC,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.LOC     MGR_LOC
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  WHERE E1.DEPTNO IN (10,20) AND E1.HIREDATE > '31-DEC-82'
+ 13   AND
+ 14* E2.JOB = 'MANAGER' AND  D2.DNAME = 'RESEARCH'
+SQL> /
+
+EMP_NAME   EMP_LOC       MGR_NAME   MGR_LOC
+---------- ------------- ---------- -------------
+SCOTT      DALLAS        JONES      DALLAS
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME   EMP_NAME,
+  2         D1.LOC     EMP_LOC,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.LOC     MGR_LOC
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  WHERE E1.HIREDATE > (SELECT HIREDATE
+ 13                      FROM EMP
+ 14                      WHERE ENAME = 'JONES') AND D1.DNAME = 'SALES'
+ 15  AND E2.SAL < (SELECT SAL
+ 16             FROM EMP
+ 17*            WHERE ENAME = 'KING') AND  D2.LOC = 'CHICAGO'
+SQL> /
+
+EMP_NAME   EMP_LOC       MGR_NAME   MGR_LOC
+---------- ------------- ---------- -------------
+MARTIN     CHICAGO       BLAKE      CHICAGO
+TURNER     CHICAGO       BLAKE      CHICAGO
+JAMES      CHICAGO       BLAKE      CHICAGO
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E1.ENAME   EMP_NAME,
+  2         D1.DNAME     EMP_DNAME,
+  3         E2.ENAME   MGR_NAME,
+  4         D2.DNAME     MGR_DNAME
+  5  FROM EMP E1
+  6  JOIN DEPT D1
+  7       ON E1.DEPTNO = D1.DEPTNO
+  8  JOIN EMP E2
+  9       ON E1.MGR = E2.EMPNO
+ 10  JOIN DEPT D2
+ 11       ON E2.DEPTNO = D2.DEPTNO
+ 12  WHERE E1.SAL> (SELECT SAL
+ 13                      FROM EMP
+ 14                      WHERE ENAME = 'ALLEN') AND D1.DNAME = 'ACCOUNTING'
+ 15* AND E2.JOB = 'PRESIDENT' AND  D2.LOC = 'NEW YORK'
+SQL> /
+
+EMP_NAME   EMP_DNAME      MGR_NAME   MGR_DNAME
+---------- -------------- ---------- --------------
+CLARK      ACCOUNTING     KING       ACCOUNTING
+
+
+
