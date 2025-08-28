@@ -1,0 +1,321 @@
+1] WAQTD NAMES OF AN EMP WHOSE NAME STARTS WITH CHARACTER 'A'.
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME,1,1) = 'A';
+
+ENAME
+----------
+ALLEN
+ADAMS
+
+2] WAQTD NAMES OF AN EMP WHOSE DESIGNATION STARTS WITH CHARACTER 'S'.
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SUBSTR(JOB,1,1) = 'S';
+
+ENAME
+----------
+ALLEN
+WARD
+MARTIN
+TURNER
+
+
+3] WAQTD DETAILS OF AN EMP WHOSE NAME ENDS WITH CHARACTER 'T'.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,-1,1) = 'T'
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+4] WAQTD DETAILS OF AN EMP WHOSE NAME HAS CHARACTER 'A'.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE INSTR(ENAME,'A',1) > 0
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+7 rows selected.
+
+
+5] WAQTD NAMES OF AN EMP WHO HAS CHARACTER 'A' IN SECOND PLACE OF HIS NAME.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,2,1) = 'A'
+SQL> /
+
+ENAME
+----------
+WARD
+MARTIN
+JAMES
+
+6] WAQTD DETAILS OF AN EMP HAVING 'A' IN SECOND LAST PLACE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,-2,1) = 'A'
+SQL> /
+
+no rows selected
+
+7] WAQTD DETAILS OF AN EMP HAVING 'S' IN THE LAST PLACE.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,-1,1) = 'S'
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+8] WAQTD NAMES OF AN EMP HAVING 'E' IN THE FOURTH PLACE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,4,1) = 'E'
+SQL> /
+
+ENAME
+----------
+ALLEN
+JONES
+JAMES
+
+9] WAQTD NAME OF AN EMP WHO HAVING CHARACTER 'A' IN FIRST PLACE & 'S' IN THE LAST PLACE
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,1,1) = 'A' AND SUBSTR(ENAME,-1,1) = 'S'
+SQL> /
+
+ENAME
+----------
+ADAMS
+
+
+10] WAQTD NAME & SAL OF EMP'S IF THEY ARE EARNING 3 DIGIT SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL
+  2  FROM EMP
+  3* WHERE LENGTH(SAL) = 3
+SQL> /
+
+ENAME             SAL
+---------- ----------
+SMITH             800
+JAMES             950
+
+
+11] WAQTD NAME & HIREDATE OF EMP IF THEY WERE HIRED IN THE YEAR 82.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,HIREDATE
+  2  FROM EMP
+  3* WHERE SUBSTR(HIREDATE,-2,2) = 82
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+MILLER     23-JAN-82
+
+12] WAQTD DETAILS OF AN EMP WHO HAVING CHARACTER 'A' IN FIRST PLACE OR EMP'S IF THEY HAVE 'S' IN LAST PLACE.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,1,1) = 'A' OR SUBSTR(ENAME,-1,1) = 'S'
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+
+13] WAQTD NAME OF AN EMP WHO HAVING CHARACTER 'A' IN FIRST PLACE & WORKING IN DEPTNO 10 OR 20.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3* WHERE SUBSTR(ENAME,1,1) = 'A' AND DEPTNO IN (10,20)
+  4  /
+
+ENAME
+----------
+ADAMS
+
+14] WAQTD NAME & SALARY OF EMP IF THEY ARE EARNING 4 DIGIT SALARY
+
+SQL> SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE LENGTH(SAL) = 4;
+
+ENAME             SAL
+---------- ----------
+ALLEN            1600
+WARD             1250
+JONES            2975
+MARTIN           1250
+BLAKE            2850
+CLARK            2450
+SCOTT            3000
+KING             5000
+TURNER           1500
+ADAMS            1100
+FORD             3000
+MILLER           1300
+
+12 rows selected.
+
+15] WAQTD NAME, HIREDATE IF THEY ARE HIRED IN THE YEAR 81 & EARNING SALARY MORE THAN 2000
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,HIREDATE
+  2  FROM EMP
+  3* WHERE SUBSTR(HIREDATE,-2,2) = 81 AND SAL > 2000
+SQL> /
+
+ENAME      HIREDATE
+---------- ---------
+JONES      02-APR-81
+BLAKE      01-MAY-81
+CLARK      09-JUN-81
+KING       17-NOV-81
+FORD       03-DEC-81
+
+16] WAQTD DETAILS OF EMP'S IF THEY ARE HAVING STRING 'MAN' IN THEIR JOB.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3* WHERE INSTR(JOB,'MAN',1) > 0
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+
+7 rows selected.
+
+17] WAQTD DETAILS OF AN EMP WHO HAVING CHARACTER 'A' IN FIRST PLACE, 'D' IN SECOND PLACE & 'S' IN LAST PLACE.
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE SUBSTR(ENAME, 1, 1) = 'A'
+  4    AND SUBSTR(ENAME, 2, 1) = 'D'
+  5    AND SUBSTR(ENAME, -1, 1) = 'S';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+
+
+18] WAQTD NAMES OF AN EMP WORKING IN DEPTNO 30 OR 40 & EARNING MORE THAN 2000.
+
+SQL> SELECT UPPER(ENAME) AS NAME
+  2  FROM EMP
+  3  WHERE DEPTNO IN (30, 40)
+  4    AND SAL > 2000;
+
+NAME
+----------
+BLAKE
+
+19] WAQTD DETAILS OF AN EMP WORKING AS 'SALESMAN' OR 'MANAGER' IN DEPTNO 20 IN THE YEAR 83.
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT *
+  2  FROM EMP
+  3  WHERE (JOB IN ('MANAGER','SALESMAN') OR  DEPTNO IN (20))
+  4* AND SUBSTR(HIREDATE,-2,2) = 82
+SQL> /
+
+no rows selected
+
+
+20] WAQTD DETAILS OF EMP ALONG WITH ANNUAL SALARY IF THE ANNUAL SALARY IS MORE THAN RS.15000 IN DEPTNO 10 OR 20 EXCEPT EMP'S HIRED IN THE YEAR 82.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT EMP.*,SAL * 12 ANN_SAL
+  2  FROM EMP
+  3  WHERE SAL * 12 > 15000 AND DEPTNO IN (10,20)
+  4* AND SUBSTR(HIREDATE,-2,2) != 82
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO    ANN_SAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20      35700
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10      29400
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20      36000
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10      60000
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20      36000
+
+
+
+
