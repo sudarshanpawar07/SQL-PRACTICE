@@ -1,0 +1,347 @@
+1] WAQTD THE DNAME'S IN WHICH EMP'S ARE WORKING.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT D
+  3  WHERE EXISTS(SELECT DEPTNO
+  4               FROM EMP E
+  5*         WHERE D.DEPTNO = E.DEPTNO)
+SQL> /
+
+DNAME
+--------------
+ACCOUNTING
+RESEARCH
+SALES
+
+2] WAQTD THE LOCATIO'S WHERE EMP'S ARE PRESENT
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT D
+  3  WHERE EXISTS(SELECT DEPTNO
+  4               FROM EMP E
+  5*         WHERE D.DEPTNO = E.DEPTNO)
+SQL> /
+
+LOC
+-------------
+NEW YORK
+DALLAS
+CHICAGO
+
+3] WAQTD THE DNAME IN WHICH EMP'S ARE NOT WORKING.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT D
+  3  WHERE NOT EXISTS(SELECT DEPTNO
+  4               FROM EMP E
+  5*         WHERE D.DEPTNO = E.DEPTNO)
+SQL> /
+
+DNAME
+--------------
+OPERATIONS
+
+4] WAQTD THE DIFFERENT DESIGNATIONS IN WHICH EMP'S ARE WORKING IN ALL THE DNAME'S OF DEPT TABLE.
+
+5] WAQTD TOTAL NUMBER OF EMP'S PRESENT IN ALL THE LOCATIONS.
+6] WAQTD 4TH MAX SALARY IN EMP TABLE.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT(DISTINCT SAL)
+  4     FROM EMP E2
+  5*    WHERE E1.SAL < E2.SAL ) = 3
+SQL> /
+
+       SAL
+----------
+      2850
+7] WAQTD 8TH MIN SAL IN EMP TABLE.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT(DISTINCT SAL)
+  4     FROM EMP E2
+  5*    WHERE E1.SAL > E2.SAL ) = 7
+SQL> /
+
+       SAL
+----------
+      2450
+
+8] WAQTD 1ST , 3RD AND 5TH MAX SAL
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT(DISTINCT SAL)
+  4     FROM EMP E2
+  5*    WHERE E1.SAL < E2.SAL ) IN (0,2,4)
+SQL> /
+
+       SAL
+----------
+      2975
+      2450
+      5000
+
+9] WAQTD 2ND, 4TH AND 6TH MIN SAL.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SAL
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT(DISTINCT SAL)
+  4     FROM EMP E2
+  5*    WHERE E1.SAL > E2.SAL ) IN (1,3,5)
+SQL> /
+
+       SAL
+----------
+      1250
+      1250
+      1500
+       950
+
+10] WAQTD NAME OF AN EMP WHO IS EARNING 6TH MAX SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP E1
+  3  WHERE (SELECT COUNT(DISTINCT SAL)
+  4     FROM EMP E2
+  5*    WHERE E1.SAL < E2.SAL ) IN (5)
+SQL> /
+
+ENAME
+----------
+ALLEN
+
+11] WAQTD DNAME OF AN EMP WHO IS EARNING 7TH MAX SAL.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4  FROM EMP E1
+  5  WHERE (SELECT COUNT(DISTINCT SAL)
+  6         FROM EMP E2
+  7*        WHERE E1.SAL > E2.SAL) = 6)
+SQL> /
+
+DNAME
+--------------
+SALES
+
+
+
+12] WAQTD LOC OF AN EMP WHO IS EARNING 9TH MIN SAL
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4  FROM EMP E1
+  5  WHERE (SELECT COUNT(DISTINCT SAL)
+  6         FROM EMP E2
+  7*        WHERE E1.SAL > E2.SAL) = 8)
+SQL> /
+
+LOC
+-------------
+CHICAGO
+
+
+13] WAQTD MANAGER NAME OF AN EMP WHO IS EARNING 2ND MIN SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E2.ENAME AS MGR_NAME
+  2  FROM EMP E1, EMP E2
+  3  WHERE E1.MGR = E2.EMPNO
+  4    AND (
+  5        SELECT COUNT(DISTINCT SAL)
+  6        FROM EMP E
+  7        WHERE E.SAL < E1.SAL
+  8*   ) = 2
+SQL> /
+
+MGR_NAME
+----------
+BLAKE
+
+
+14] WAQTDN NUMBER OF EMP'S REPORTING TO EMP WHO IS EARNING 8TH MAX SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP E1, EMP E2
+  3  WHERE E1.MGR = E2.EMPNO
+  4    AND (
+  5        SELECT COUNT(DISTINCT SAL)
+  6        FROM EMP E
+  7        WHERE E.SAL > E1.SAL
+  8*   ) = 7
+SQL> /
+
+  COUNT(*)
+----------
+         1
+
+15] WAQTD DNAME OF EMP WHO IS EARNING 12TH MAX SALARY'S MANAGER.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT E2.DEPTNO
+  4  FROM EMP E1, EMP E2
+  5  WHERE E1.MGR = E2.EMPNO
+  6    AND (
+  7        SELECT COUNT(DISTINCT SAL)
+  8        FROM EMP E
+  9        WHERE E.SAL < E1.SAL
+ 10*   ) = 11)
+SQL> /
+
+no rows selected
+
+
+16] WAQTD LOCATION OF EMP'S WHO ARE THE EMP'S OF A PERSON WHO IS EARNING 8TH MIN SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1      SELECT LOC
+  2      FROM DEPT
+  3      WHERE DEPTNO IN (SELECT E2.DEPTNO
+  4      FROM EMP E1, EMP E2
+  5      WHERE E1.MGR = E2.EMPNO
+  6        AND (
+  7            SELECT COUNT(DISTINCT SAL)
+  8            FROM EMP E
+  9            WHERE E.SAL > E1.SAL
+ 10*     ) = 7)
+ 11  /
+
+LOC
+-------------
+NEW YORK
+
+17] WAQTD MGR'S MGR OF EMP WHO IS EARNING 12TH MAX SALARY.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1       SELECT E2.MGR MGR_NAME
+  2      FROM EMP E1, EMP E2
+  3      WHERE E1.MGR = E2.EMPNO
+  4        AND (
+  5            SELECT COUNT(DISTINCT SAL)
+  6            FROM EMP E
+  7            WHERE E.SAL < E1.SAL
+  8*     ) = 11
+SQL> /
+
+no rows selected
+
+
+18] WAQTD EMP'S EMP DNAMES IF THEY ARE WORKING UNDER THE EMP WHO IS HAVING 10TH MIN SAL.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DISTINCT D.DNAME
+  2  FROM EMP E
+  3  JOIN DEPT D ON E.DEPTNO = D.DEPTNO
+  4  WHERE E.MGR = (
+  5      SELECT E1.EMPNO
+  6      FROM EMP E1
+  7      WHERE (
+  8          SELECT COUNT(DISTINCT SAL)
+  9          FROM EMP E2
+ 10          WHERE E2.SAL < E1.SAL
+ 11      ) = 9
+ 12* )
+SQL> /
+
+DNAME
+--------------
+RESEARCH
+
+19] WAQTD NUMBER OF EMP'S WHO ARE WORKING IN THE DEPTNO OF EMP WHO IS EARNING 11TH MIN SAL.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(*)
+  2  FROM EMP E
+  3  WHERE E.DEPTNO IN (
+  4      SELECT E1.DEPTNO
+  5      FROM EMP E1
+  6      WHERE (
+  7          SELECT COUNT(DISTINCT SAL)
+  8          FROM EMP E2
+  9          WHERE E2.SAL < E1.SAL
+ 10      ) = 10
+ 11* )
+SQL> /
+
+  COUNT(*)
+----------
+         5
+
+
+20] WAQTD TOTAL SAL OF EMP'S WHO ARE WORKING THE SAME DESIGNATION AS THAT OF EMP WHO IS EARNING LEAST SALARY.
+
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT SUM(SAL)
+  2  FROM EMP E
+  3  WHERE JOB = (
+  4      SELECT JOB
+  5      FROM EMP E1
+  6      WHERE SAL = (
+  7          SELECT MIN(SAL)
+  8          FROM EMP
+  9      )
+ 10* )
+SQL> /
+
+  SUM(SAL)
+----------
+      4150
+
+
+
+
