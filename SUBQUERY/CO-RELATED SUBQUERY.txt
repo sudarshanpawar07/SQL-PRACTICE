@@ -52,7 +52,56 @@ OPERATIONS
 
 4] WAQTD THE DIFFERENT DESIGNATIONS IN WHICH EMP'S ARE WORKING IN ALL THE DNAME'S OF DEPT TABLE.
 
+SQL> SELECT D.DNAME,
+  2         E.JOB
+  3  FROM DEPT D
+  4       JOIN EMP E
+  5         ON D.DEPTNO = E.DEPTNO
+  6  WHERE E.JOB IN (
+  7        SELECT DISTINCT E1.JOB
+  8        FROM EMP E1
+  9        WHERE E1.DEPTNO = D.DEPTNO
+ 10  );
+
+DNAME          JOB
+-------------- ---------
+RESEARCH       CLERK
+RESEARCH       CLERK
+SALES          SALESMAN
+SALES          SALESMAN
+SALES          SALESMAN
+SALES          SALESMAN
+RESEARCH       MANAGER
+SALES          MANAGER
+ACCOUNTING     MANAGER
+RESEARCH       ANALYST
+RESEARCH       ANALYST
+ACCOUNTING     PRESIDENT
+SALES          CLERK
+ACCOUNTING     CLERK
+
+14 rows selected.
+
 5] WAQTD TOTAL NUMBER OF EMP'S PRESENT IN ALL THE LOCATIONS.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT D.LOC,
+  2         (SELECT COUNT(*)
+  3          FROM EMP E
+  4          WHERE E.DEPTNO = D.DEPTNO)
+  5* FROM DEPT D
+SQL> /
+
+LOC           (SELECTCOUNT(*)FROMEMPEWHEREE.DEPTNO=D.DEPTNO)
+------------- ----------------------------------------------
+NEW YORK                                                   3
+DALLAS                                                     5
+CHICAGO                                                    6
+BOSTON                                                     0
+
+
 6] WAQTD 4TH MAX SALARY IN EMP TABLE.
 SQL> ED
 Wrote file afiedt.buf
